@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application' version '7.4.2'
+}
+
+Properties localProperties = new Properties()
+File localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+
+android {
+    namespace 'com.ascoltare.music'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId 'com.ascoltare.music'
+        minSdk 23
+        targetSdk 33
+        versionCode 11
+        versionName '2.5'
+        buildConfigField 'String', 'MUSIC_API_KEY', "\"${localProperties.getProperty('MUSIC_API_KEY', '')}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
